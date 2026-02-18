@@ -3,16 +3,16 @@
 import { useParams } from "next/navigation";
 import { getChallengeBySlug } from "@/lib/challenges";
 import ChallengeShell from "@/components/ChallengeShell";
-import BinaryDecode from "@/components/challenges/BinaryDecode";
-import Base64Onion from "@/components/challenges/Base64Onion";
-import RegexMatch from "@/components/challenges/RegexMatch";
-import NestedJSON from "@/components/challenges/NestedJSON";
 import CharacterCount from "@/components/challenges/CharacterCount";
 import MathGauntlet from "@/components/challenges/MathGauntlet";
-import CodeOutput from "@/components/challenges/CodeOutput";
 import HexColor from "@/components/challenges/HexColor";
 import PixelCount from "@/components/challenges/PixelCount";
 import SortingMedian from "@/components/challenges/SortingMedian";
+import MazeSolver from "@/components/challenges/MazeSolver";
+import OddColorOut from "@/components/challenges/OddColorOut";
+import WordSearch from "@/components/challenges/WordSearch";
+import SpotDifference from "@/components/challenges/SpotDifference";
+import StringMatch from "@/components/challenges/StringMatch";
 import Link from "next/link";
 
 const componentMap: Record<
@@ -24,16 +24,16 @@ const componentMap: Record<
     reset: () => void;
   }>
 > = {
-  "binary-decode": BinaryDecode,
-  "base64-onion": Base64Onion,
-  "regex-match": RegexMatch,
-  "nested-json": NestedJSON,
   "character-count": CharacterCount,
   "math-gauntlet": MathGauntlet,
-  "code-output": CodeOutput,
   "hex-color": HexColor,
   "pixel-count": PixelCount,
   "sorting-median": SortingMedian,
+  "maze-solver": MazeSolver,
+  "odd-color-out": OddColorOut,
+  "word-search": WordSearch,
+  "spot-the-difference": SpotDifference,
+  "string-match": StringMatch,
 };
 
 export default function ChallengePage() {

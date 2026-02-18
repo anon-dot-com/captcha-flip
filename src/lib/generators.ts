@@ -19,107 +19,7 @@ function randInt(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-/* ── 1. Binary Decode ──────────────────────── */
-export function genBinary() {
-  const words = [
-    "hello", "world", "robot", "agent", "pixel", "brain",
-    "logic", "debug", "bytes", "stack", "parse", "query",
-    "linux", "cache", "cloud", "async", "array", "class",
-  ];
-  const word = pick(words);
-  const binary = word
-    .split("")
-    .map((c) => c.charCodeAt(0).toString(2).padStart(8, "0"))
-    .join(" ");
-  return { binary, answer: word };
-}
-
-/* ── 2. Base64 Onion ──────────────────────── */
-export function genBase64Onion() {
-  const words = [
-    "cipher", "neural", "matrix", "kernel", "daemon",
-    "socket", "tensor", "packet", "bitmap", "cursor",
-  ];
-  const word = pick(words);
-  const layers = randInt(3, 5);
-  let encoded = word;
-  for (let i = 0; i < layers; i++) {
-    encoded = btoa(encoded);
-  }
-  return { encoded, layers, answer: word };
-}
-
-/* ── 3. Regex Match ──────────────────────── */
-export function genRegex() {
-  const challenges = [
-    {
-      pattern: "^[a-z]+\\d{2,}$",
-      display: "^[a-z]+\\d{2,}$",
-      strings: ["hello42", "Test99", "abc1", "foo123", "BAR77", "zip00"],
-      matches: ["hello42", "foo123", "zip00"],
-    },
-    {
-      pattern: "^\\d{3}-[A-Z]{2}$",
-      display: "^\\d{3}-[A-Z]{2}$",
-      strings: ["123-AB", "45-CD", "999-XY", "000-ab", "100-ZZ", "12-A"],
-      matches: ["123-AB", "999-XY", "100-ZZ"],
-    },
-    {
-      pattern: "\\b\\w{5}\\b",
-      display: "\\b\\w{5}\\b",
-      strings: ["apple", "hi", "world", "abcde", "no", "12345"],
-      matches: ["apple", "world", "abcde", "12345"],
-    },
-    {
-      pattern: "^[aeiou].*[aeiou]$",
-      display: "^[aeiou].*[aeiou]$",
-      strings: ["apple", "orange", "idea", "echo", "umbrella", "ice"],
-      matches: ["apple", "orange", "idea", "umbrella", "ice"],
-    },
-    {
-      pattern: "^(?!.*\\d).{4,6}$",
-      display: "^(?!.*\\d).{4,6}$",
-      strings: ["hello", "abc", "world!", "test1", "abcdef", "hi"],
-      matches: ["hello", "world!", "abcdef"],
-    },
-  ];
-  const ch = pick(challenges);
-  const shuffled = shuffle(ch.strings);
-  return { pattern: ch.display, strings: shuffled, matches: ch.matches };
-}
-
-/* ── 4. Nested JSON ──────────────────────── */
-export function genNestedJSON() {
-  const names = ["alpha", "beta", "gamma", "delta", "epsilon"];
-  const colors = ["red", "blue", "green", "violet", "amber"];
-  const animals = ["fox", "owl", "elk", "bee", "ant"];
-
-  const targetValue = pick(["42", "true", '"secret"', '"found_me"', "3.14"]);
-  const pathParts = shuffle(names).slice(0, 4);
-  const dotPath = pathParts.join(".");
-
-  // Build the object with noise
-  const buildObj = (parts: string[], depth: number): Record<string, unknown> => {
-    const obj: Record<string, unknown> = {};
-    // Add noise siblings
-    const noiseKeys = shuffle([...colors, ...animals]).slice(0, randInt(2, 4));
-    for (const k of noiseKeys) {
-      obj[k] = depth > 2 ? randInt(1, 100) : { [pick(names)]: randInt(1, 99) };
-    }
-    if (parts.length === 1) {
-      // We insert the raw string for the value (will be parsed for comparison)
-      obj[parts[0]] = JSON.parse(targetValue);
-    } else {
-      obj[parts[0]] = buildObj(parts.slice(1), depth + 1);
-    }
-    return obj;
-  };
-
-  const json = buildObj(pathParts, 0);
-  return { json, path: dotPath, answer: targetValue };
-}
-
-/* ── 5. Character Count ──────────────────── */
+/* ── Character Count ──────────────────── */
 export function genCharCount() {
   const paragraphs = [
     "The quick brown fox jumps over the lazy dog. A wizard quickly jinxed the gnomes before they vaporized. Pack my box with five dozen liquor jugs. How vexingly quick daft zebras jump! The five boxing wizards jump quickly. Sphinx of black quartz, judge my vow.",
@@ -133,78 +33,63 @@ export function genCharCount() {
   return { text, letter, answer: count };
 }
 
-/* ── 6. Math Gauntlet ──────────────────────── */
+/* ── Math Gauntlet (simplified: addition/subtraction only) ── */
 export function genMath() {
-  // Build an expression with proper precedence traps
-  const templates = [
-    { expr: () => { const a=randInt(2,9),b=randInt(2,9),c=randInt(1,5),d=randInt(10,20); return { display: `${a} + ${b} × ${c} - ${d}`, answer: a + b * c - d }; }},
-    { expr: () => { const a=randInt(2,5),b=randInt(2,4),c=randInt(3,7),d=randInt(1,3); return { display: `${a} × ${b} + ${c} × ${d} - ${a}`, answer: a * b + c * d - a }; }},
-    { expr: () => { const a=randInt(10,30),b=randInt(2,5),c=randInt(3,8),d=randInt(2,4),e=randInt(1,5); return { display: `${a} - ${b} × ${c} + ${d} × ${e}`, answer: a - b * c + d * e }; }},
-    { expr: () => { const a=randInt(2,6),b=randInt(2,6),c=randInt(2,4),d=randInt(1,9),e=randInt(2,5); return { display: `(${a} + ${b}) × ${c} - ${d} + ${e}`, answer: (a + b) * c - d + e }; }},
-    { expr: () => { const a=randInt(100,200),b=randInt(3,9),c=randInt(10,25),d=randInt(2,5),e=randInt(5,15); return { display: `${a} - ${b} × (${c} - ${d}) + ${e}`, answer: a - b * (c - d) + e }; }},
-  ];
-  const t = pick(templates);
-  const result = t.expr();
-  return { expression: result.display, answer: result.answer };
+  const termCount = randInt(8, 12);
+  const parts: { sign: string; value: number }[] = [];
+
+  // First term is always positive
+  parts.push({ sign: "", value: randInt(1, 20) });
+
+  for (let i = 1; i < termCount; i++) {
+    const sign = Math.random() < 0.5 ? "+" : "-";
+    parts.push({ sign, value: randInt(1, 20) });
+  }
+
+  let answer = parts[0].value;
+  const displayParts = [String(parts[0].value)];
+  for (let i = 1; i < parts.length; i++) {
+    displayParts.push(` ${parts[i].sign} ${parts[i].value}`);
+    if (parts[i].sign === "+") {
+      answer += parts[i].value;
+    } else {
+      answer -= parts[i].value;
+    }
+  }
+
+  return { expression: displayParts.join(""), answer };
 }
 
-/* ── 7. Code Output ──────────────────────── */
-export function genCodeOutput() {
-  const snippets = [
-    {
-      code: `console.log(typeof typeof 1)`,
-      answer: "string",
-    },
-    {
-      code: `console.log(0.1 + 0.2 === 0.3)`,
-      answer: "false",
-    },
-    {
-      code: `console.log([..."hello"].reverse().join(""))`,
-      answer: "olleh",
-    },
-    {
-      code: `console.log(+"")`,
-      answer: "0",
-    },
-    {
-      code: `console.log([] + [])`,
-      answer: "",
-      answerDisplay: "(empty string)",
-    },
-    {
-      code: `console.log(null == undefined)`,
-      answer: "true",
-    },
-    {
-      code: `console.log(typeof NaN)`,
-      answer: "number",
-    },
-    {
-      code: `const a = [1, 2, 3];\nconsole.log(a.length = 0);\nconsole.log(a)`,
-      answer: "0\n[]",
-    },
-    {
-      code: `console.log("b" + "a" + +"a" + "a")`,
-      answer: "baNaNa",
-    },
-    {
-      code: `console.log(1 < 2 < 3)`,
-      answer: "true",
-    },
-    {
-      code: `console.log(3 > 2 > 1)`,
-      answer: "false",
-    },
-    {
-      code: `console.log([10, 9, 8, 1, 2, 3].sort().toString())`,
-      answer: "1,10,2,3,8,9",
-    },
-  ];
-  return pick(snippets);
+/* ── Hex Color ──────────────────────── */
+export function genHexColor() {
+  const randomHex = () => {
+    const r = randInt(30, 230);
+    const g = randInt(30, 230);
+    const b = randInt(30, 230);
+    return {
+      hex: `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`.toUpperCase(),
+      r,
+      g,
+      b,
+    };
+  };
+
+  const correct = randomHex();
+
+  const decoys: { hex: string; r: number; g: number; b: number }[] = [];
+  while (decoys.length < 3) {
+    const d = randomHex();
+    const dist = Math.abs(d.r - correct.r) + Math.abs(d.g - correct.g) + Math.abs(d.b - correct.b);
+    if (dist > 80 && !decoys.some((x) => x.hex === d.hex) && d.hex !== correct.hex) {
+      decoys.push(d);
+    }
+  }
+
+  const options = shuffle([correct, ...decoys]);
+  return { hex: correct.hex, options: options.map((o) => o.hex), answer: correct.hex };
 }
 
-/* ── 9. Pixel Count ──────────────────────── */
+/* ── Pixel Count ──────────────────────── */
 export function genPixelCount() {
   const gridSize = pick([14, 16, 18, 20]);
   const totalCells = gridSize * gridSize;
@@ -219,18 +104,15 @@ export function genPixelCount() {
     { name: "orange", hex: "#f97316" },
   ];
 
-  // Pick 4-6 colors to use
   const colorCount = randInt(4, 6);
   const colors = shuffle(palette).slice(0, colorCount);
   const targetColor = pick(colors);
 
-  // Fill grid with random colors
   const grid: string[] = [];
   for (let i = 0; i < totalCells; i++) {
     grid.push(pick(colors).hex);
   }
 
-  // Count target color occurrences
   const answer = grid.filter((c) => c === targetColor.hex).length;
 
   return {
@@ -242,10 +124,9 @@ export function genPixelCount() {
   };
 }
 
-/* ── 10. Sorting / Median ─────────────────── */
+/* ── Sorting / Median ─────────────────── */
 export function genSortingMedian() {
   const count = randInt(19, 25);
-  // Make count odd so median is a single number
   const n = count % 2 === 0 ? count + 1 : count;
   const numbers: number[] = [];
   for (let i = 0; i < n; i++) {
@@ -257,27 +138,314 @@ export function genSortingMedian() {
   return { numbers, answer, count: n };
 }
 
+/* ══════════════════════════════════════════
+   NEW CHALLENGES
+   ══════════════════════════════════════════ */
 
-export function genHexColor() {
-  const randomHex = () => {
-    const r = randInt(30, 230);
-    const g = randInt(30, 230);
-    const b = randInt(30, 230);
-    return { hex: `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`.toUpperCase(), r, g, b };
-  };
+/* ── Maze Solver ──────────────────────── */
+export interface MazeCell {
+  top: boolean;
+  right: boolean;
+  bottom: boolean;
+  left: boolean;
+}
 
-  const correct = randomHex();
-
-  // Generate 3 decoys that are noticeably different
-  const decoys: { hex: string; r: number; g: number; b: number }[] = [];
-  while (decoys.length < 3) {
-    const d = randomHex();
-    const dist = Math.abs(d.r - correct.r) + Math.abs(d.g - correct.g) + Math.abs(d.b - correct.b);
-    if (dist > 80 && !decoys.some((x) => x.hex === d.hex) && d.hex !== correct.hex) {
-      decoys.push(d);
+export function genMaze() {
+  const size = pick([12, 14, 16]);
+  // Initialize grid with all walls
+  const grid: MazeCell[][] = [];
+  for (let r = 0; r < size; r++) {
+    grid[r] = [];
+    for (let c = 0; c < size; c++) {
+      grid[r][c] = { top: true, right: true, bottom: true, left: true };
     }
   }
 
-  const options = shuffle([correct, ...decoys]);
-  return { hex: correct.hex, options: options.map((o) => o.hex), answer: correct.hex };
+  // Recursive backtracking maze generation
+  const visited = Array.from({ length: size }, () => Array(size).fill(false));
+  const dirs: [number, number, keyof MazeCell, keyof MazeCell][] = [
+    [-1, 0, "top", "bottom"],
+    [0, 1, "right", "left"],
+    [1, 0, "bottom", "top"],
+    [0, -1, "left", "right"],
+  ];
+
+  function carve(r: number, c: number) {
+    visited[r][c] = true;
+    const shuffledDirs = shuffle([...dirs]);
+    for (const [dr, dc, wall, opposite] of shuffledDirs) {
+      const nr = r + dr;
+      const nc = c + dc;
+      if (nr >= 0 && nr < size && nc >= 0 && nc < size && !visited[nr][nc]) {
+        grid[r][c][wall] = false;
+        grid[nr][nc][opposite] = false;
+        carve(nr, nc);
+      }
+    }
+  }
+
+  carve(0, 0);
+
+  // Find solution path via BFS
+  const queue: [number, number][] = [[0, 0]];
+  const parent = new Map<string, string>();
+  const key = (r: number, c: number) => `${r},${c}`;
+  parent.set(key(0, 0), "start");
+
+  while (queue.length > 0) {
+    const [r, c] = queue.shift()!;
+    if (r === size - 1 && c === size - 1) break;
+
+    const cell = grid[r][c];
+    const neighbors: [number, number, boolean][] = [
+      [r - 1, c, !cell.top],
+      [r, c + 1, !cell.right],
+      [r + 1, c, !cell.bottom],
+      [r, c - 1, !cell.left],
+    ];
+
+    for (const [nr, nc, open] of neighbors) {
+      if (open && nr >= 0 && nr < size && nc >= 0 && nc < size && !parent.has(key(nr, nc))) {
+        parent.set(key(nr, nc), key(r, c));
+        queue.push([nr, nc]);
+      }
+    }
+  }
+
+  // Reconstruct solution path
+  const solution: Set<string> = new Set();
+  let cur = key(size - 1, size - 1);
+  while (cur !== "start") {
+    solution.add(cur);
+    cur = parent.get(cur)!;
+  }
+
+  return { grid, size, solution: Array.from(solution) };
+}
+
+/* ── Odd Color Out ──────────────────────── */
+export function genOddColorOut() {
+  const gridSize = 8;
+  const r = randInt(60, 200);
+  const g = randInt(60, 200);
+  const b = randInt(60, 200);
+
+  const baseHex = `rgb(${r},${g},${b})`;
+
+  // Subtle deviation: shift 1-2 channels by a small amount
+  const shift = pick([8, 10, 12, 14]);
+  const channel = randInt(0, 2);
+  const vals = [r, g, b];
+  vals[channel] = Math.min(255, Math.max(0, vals[channel] + (Math.random() < 0.5 ? shift : -shift)));
+  const oddHex = `rgb(${vals[0]},${vals[1]},${vals[2]})`;
+
+  const oddIndex = randInt(0, gridSize * gridSize - 1);
+
+  return { gridSize, baseColor: baseHex, oddColor: oddHex, oddIndex };
+}
+
+/* ── Word Search ──────────────────────── */
+export interface WordSearchData {
+  grid: string[][];
+  gridSize: number;
+  words: string[];
+  placements: { word: string; startR: number; startC: number; endR: number; endC: number }[];
+}
+
+export function genWordSearch(): WordSearchData {
+  const gridSize = 10;
+  const wordPool = [
+    "ROBOT", "PIXEL", "BRAIN", "LIGHT", "CLOUD",
+    "STACK", "QUERY", "LOGIC", "ARRAY", "DEBUG",
+    "CACHE", "MOUSE", "TOKEN", "CYBER", "POWER",
+    "SOLAR", "FLAME", "OCEAN", "STORM", "LASER",
+  ];
+
+  const grid: string[][] = Array.from({ length: gridSize }, () =>
+    Array(gridSize).fill("")
+  );
+
+  const directions: [number, number][] = [
+    [0, 1],   // horizontal right
+    [1, 0],   // vertical down
+    [1, 1],   // diagonal down-right
+    [0, -1],  // horizontal left
+    [-1, 0],  // vertical up
+    [-1, -1], // diagonal up-left
+    [1, -1],  // diagonal down-left
+    [-1, 1],  // diagonal up-right
+  ];
+
+  const placements: WordSearchData["placements"] = [];
+  const shuffledWords = shuffle(wordPool);
+
+  for (const word of shuffledWords) {
+    if (placements.length >= 4) break;
+
+    let placed = false;
+    // Try up to 100 times to place this word
+    for (let attempt = 0; attempt < 100 && !placed; attempt++) {
+      const [dr, dc] = pick(directions);
+      const startR = randInt(0, gridSize - 1);
+      const startC = randInt(0, gridSize - 1);
+      const endR = startR + dr * (word.length - 1);
+      const endC = startC + dc * (word.length - 1);
+
+      // Check bounds
+      if (endR < 0 || endR >= gridSize || endC < 0 || endC >= gridSize) continue;
+
+      // Check no conflicts
+      let fits = true;
+      for (let i = 0; i < word.length; i++) {
+        const r = startR + dr * i;
+        const c = startC + dc * i;
+        if (grid[r][c] !== "" && grid[r][c] !== word[i]) {
+          fits = false;
+          break;
+        }
+      }
+
+      if (fits) {
+        for (let i = 0; i < word.length; i++) {
+          grid[startR + dr * i][startC + dc * i] = word[i];
+        }
+        placements.push({ word, startR, startC, endR: endR, endC: endC });
+        placed = true;
+      }
+    }
+  }
+
+  // Fill remaining cells with random letters
+  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  for (let r = 0; r < gridSize; r++) {
+    for (let c = 0; c < gridSize; c++) {
+      if (grid[r][c] === "") {
+        grid[r][c] = letters[randInt(0, letters.length - 1)];
+      }
+    }
+  }
+
+  return {
+    grid,
+    gridSize,
+    words: placements.map((p) => p.word),
+    placements,
+  };
+}
+
+/* ── Spot the Difference ──────────────── */
+export interface SpotDiffData {
+  gridSize: number;
+  gridA: string[][];
+  gridB: string[][];
+  diffCells: [number, number][];
+}
+
+export function genSpotDifference(): SpotDiffData {
+  const gridSize = 7;
+  const emojis = [
+    "🔴", "🟢", "🔵", "🟡", "🟣", "⬛", "🟠", "⭐",
+    "🔶", "🔷", "💠", "🟤", "⬜", "💜", "💚", "❤️",
+    "🌀", "⚡", "🔥", "💧", "🍀", "🌸", "🎯", "🎲",
+  ];
+
+  // Build grid A
+  const gridA: string[][] = [];
+  for (let r = 0; r < gridSize; r++) {
+    gridA[r] = [];
+    for (let c = 0; c < gridSize; c++) {
+      gridA[r][c] = pick(emojis);
+    }
+  }
+
+  // Copy to grid B
+  const gridB: string[][] = gridA.map((row) => [...row]);
+
+  // Pick 3-5 cells to differ
+  const diffCount = randInt(3, 5);
+  const allCells: [number, number][] = [];
+  for (let r = 0; r < gridSize; r++) {
+    for (let c = 0; c < gridSize; c++) {
+      allCells.push([r, c]);
+    }
+  }
+  const diffCells = shuffle(allCells).slice(0, diffCount);
+
+  for (const [r, c] of diffCells) {
+    let replacement = pick(emojis);
+    while (replacement === gridA[r][c]) {
+      replacement = pick(emojis);
+    }
+    gridB[r][c] = replacement;
+  }
+
+  return { gridSize, gridA, gridB, diffCells };
+}
+
+/* ── String Match ────────────────────── */
+export function genStringMatch() {
+  const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const confusable: Record<string, string[]> = {
+    l: ["1", "I"],
+    "1": ["l", "I"],
+    I: ["l", "1"],
+    O: ["0", "Q"],
+    "0": ["O", "o"],
+    o: ["0", "O"],
+    m: ["n", "rn"],
+    n: ["m", "r"],
+    b: ["d", "6"],
+    d: ["b", "q"],
+    p: ["q", "b"],
+    q: ["p", "d"],
+    S: ["5", "s"],
+    "5": ["S", "s"],
+    Z: ["2", "z"],
+    "2": ["Z", "z"],
+    B: ["8", "b"],
+    "8": ["B", "3"],
+    G: ["6", "C"],
+    "6": ["G", "b"],
+    v: ["u", "w"],
+    u: ["v", "n"],
+    w: ["v", "vv"],
+  };
+
+  // Generate target string of length 12-16
+  const len = randInt(12, 16);
+  let target = "";
+  for (let i = 0; i < len; i++) {
+    target += chars[randInt(0, chars.length - 1)];
+  }
+
+  // Generate 7-9 decoys with single-char mutations
+  const decoyCount = randInt(7, 9);
+  const decoys: string[] = [];
+  while (decoys.length < decoyCount) {
+    const arr = target.split("");
+    const pos = randInt(0, arr.length - 1);
+    const ch = arr[pos];
+
+    // Try confusable swap first, otherwise random char swap
+    if (confusable[ch] && Math.random() < 0.6) {
+      arr[pos] = pick(confusable[ch]);
+    } else {
+      // Swap case or change to adjacent char
+      if (ch >= "a" && ch <= "z") {
+        arr[pos] = ch.toUpperCase();
+      } else if (ch >= "A" && ch <= "Z") {
+        arr[pos] = ch.toLowerCase();
+      } else {
+        arr[pos] = String(randInt(0, 9));
+      }
+    }
+
+    const decoy = arr.join("");
+    if (decoy !== target && !decoys.includes(decoy)) {
+      decoys.push(decoy);
+    }
+  }
+
+  const options = shuffle([target, ...decoys]);
+  return { target, options, answer: target };
 }

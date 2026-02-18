@@ -75,8 +75,9 @@ export default function AboutPage() {
             <p className="mt-2 text-sm leading-relaxed text-zinc-300">
               What if we stop fighting it? Instead of testing what humans can do
               that AI can&apos;t, test what AI can do that humans can&apos;t.
-              Binary decoding, regex matching, JSON traversal — these are
-              trivial for machines and genuinely difficult for people.
+              Maze solving, pixel counting, string matching, color spotting —
+              anyone <em>can</em> do them, but they&apos;re painfully slow for
+              humans and trivial for machines.
             </p>
           </div>
         </div>
@@ -95,9 +96,10 @@ export default function AboutPage() {
           </p>
           <p>
             Each challenge in this app is something a language model or script
-            solves in milliseconds. For a human, the same task requires focused
-            attention, manual computation, and careful reading — sometimes
-            taking minutes.
+            solves in milliseconds — mazes via BFS, color comparisons via pixel
+            values, string matching via exact comparison. For a human, the same
+            task requires squinting, counting, tracing, and careful visual
+            attention — sometimes taking minutes.
           </p>
           <p>
             It&apos;s not a real authentication system. It&apos;s a mirror. Try

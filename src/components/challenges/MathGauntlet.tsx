@@ -25,7 +25,7 @@ export default function MathGauntlet({ onSuccess, onFailure, status }: Props) {
   return (
     <div>
       <p className="mb-2 text-sm font-medium text-zinc-400">
-        Evaluate this expression (standard operator precedence):
+        Add and subtract all of these numbers. Just raw arithmetic — no tricks, no precedence:
       </p>
       <div className="mb-6 rounded-lg border border-[#2a2d3a] bg-[#0a0c12] p-6 text-center font-mono text-xl text-white sm:text-2xl">
         {challenge.expression}
