@@ -14,7 +14,7 @@ export const challenges: ChallengeInfo[] = [
     description: "Convert a binary string to ASCII text. Trivial for silicon, tedious for carbon.",
     difficulty: "Easy",
     icon: "01",
-    color: "#1B6B4A",
+    color: "#06b6d4",
   },
   {
     slug: "base64-onion",
@@ -22,7 +22,7 @@ export const challenges: ChallengeInfo[] = [
     description: "A word encoded in base64 multiple times. Peel back every layer.",
     difficulty: "Medium",
     icon: "🧅",
-    color: "#2A9D6E",
+    color: "#34d399",
   },
   {
     slug: "regex-match",
@@ -30,7 +30,7 @@ export const challenges: ChallengeInfo[] = [
     description: "Given a regex pattern, select every string that matches. All of them.",
     difficulty: "Medium",
     icon: ".*",
-    color: "#C4A052",
+    color: "#fbbf24",
   },
   {
     slug: "nested-json",
@@ -38,7 +38,7 @@ export const challenges: ChallengeInfo[] = [
     description: "Navigate a deeply nested JSON object to find a value at a specific path.",
     difficulty: "Hard",
     icon: "{}",
-    color: "#1B6B4A",
+    color: "#a78bfa",
   },
   {
     slug: "character-count",
@@ -46,7 +46,7 @@ export const challenges: ChallengeInfo[] = [
     description: "Count exact occurrences of a specific letter in a wall of text.",
     difficulty: "Medium",
     icon: "#",
-    color: "#2A9D6E",
+    color: "#f472b6",
   },
   {
     slug: "math-gauntlet",
@@ -54,7 +54,7 @@ export const challenges: ChallengeInfo[] = [
     description: "Evaluate a long math expression with proper operator precedence.",
     difficulty: "Hard",
     icon: "∑",
-    color: "#C4A052",
+    color: "#fb923c",
   },
   {
     slug: "code-output",
@@ -62,7 +62,7 @@ export const challenges: ChallengeInfo[] = [
     description: "Read a JavaScript snippet and predict the exact output. Watch for edge cases.",
     difficulty: "Hard",
     icon: "JS",
-    color: "#1B6B4A",
+    color: "#22d3ee",
   },
   {
     slug: "hex-color",
@@ -70,7 +70,23 @@ export const challenges: ChallengeInfo[] = [
     description: "Given a hex color code, pick the correct swatch from four options.",
     difficulty: "Easy",
     icon: "🎨",
-    color: "#2A9D6E",
+    color: "#34d399",
+  },
+  {
+    slug: "pixel-count",
+    title: "Pixel Count",
+    description: "Count the exact number of pixels of a specific color in a noisy grid. No mistakes allowed.",
+    difficulty: "Hard",
+    icon: "🔲",
+    color: "#06b6d4",
+  },
+  {
+    slug: "sorting-median",
+    title: "Sorting Challenge",
+    description: "Sort 20+ numbers in your head and find the median. Trivial for a CPU, torture for a brain.",
+    difficulty: "Hard",
+    icon: "↕",
+    color: "#a855f7",
   },
 ];
 

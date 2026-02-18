@@ -7,11 +7,13 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-gray-200 bg-[#FAFAF8]/80 backdrop-blur-md">
+    <nav className="sticky top-0 z-50 border-b border-[#2a2d3a] bg-[#0c0e14]/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="text-2xl">🔄</span>
-          <span className="font-serif text-xl font-bold text-[#1A1A1A]">
+        <Link href="/" className="group flex items-center gap-2.5">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500 to-purple-500 text-sm font-bold text-white transition-shadow group-hover:shadow-[0_0_16px_rgba(34,211,238,0.3)]">
+            ↻
+          </span>
+          <span className="text-lg font-bold tracking-tight text-white">
             CAPTCHA Flip
           </span>
         </Link>
@@ -20,8 +22,8 @@ export default function Navbar() {
             href="/"
             className={`text-sm font-medium transition-colors ${
               pathname === "/"
-                ? "text-[#1B6B4A]"
-                : "text-[#6B7280] hover:text-[#1A1A1A]"
+                ? "text-cyan-400"
+                : "text-zinc-400 hover:text-white"
             }`}
           >
             Challenges
@@ -30,8 +32,8 @@ export default function Navbar() {
             href="/about"
             className={`text-sm font-medium transition-colors ${
               pathname === "/about"
-                ? "text-[#1B6B4A]"
-                : "text-[#6B7280] hover:text-[#1A1A1A]"
+                ? "text-cyan-400"
+                : "text-zinc-400 hover:text-white"
             }`}
           >
             About

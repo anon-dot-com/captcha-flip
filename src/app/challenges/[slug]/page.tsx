@@ -11,6 +11,8 @@ import CharacterCount from "@/components/challenges/CharacterCount";
 import MathGauntlet from "@/components/challenges/MathGauntlet";
 import CodeOutput from "@/components/challenges/CodeOutput";
 import HexColor from "@/components/challenges/HexColor";
+import PixelCount from "@/components/challenges/PixelCount";
+import SortingMedian from "@/components/challenges/SortingMedian";
 import Link from "next/link";
 
 const componentMap: Record<
@@ -30,6 +32,8 @@ const componentMap: Record<
   "math-gauntlet": MathGauntlet,
   "code-output": CodeOutput,
   "hex-color": HexColor,
+  "pixel-count": PixelCount,
+  "sorting-median": SortingMedian,
 };
 
 export default function ChallengePage() {
@@ -40,15 +44,15 @@ export default function ChallengePage() {
   if (!challenge) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center px-6">
-        <h1 className="font-serif text-3xl font-bold text-[#1A1A1A]">
+        <h1 className="text-3xl font-bold text-white">
           Challenge not found
         </h1>
-        <p className="mt-2 text-[#6B7280]">
+        <p className="mt-2 text-zinc-500">
           That challenge doesn&apos;t exist.
         </p>
         <Link
           href="/"
-          className="mt-6 rounded-full bg-[#1B6B4A] px-6 py-2.5 text-sm font-medium text-white"
+          className="mt-6 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 px-6 py-2.5 text-sm font-medium text-white"
         >
           Back to challenges
         </Link>
@@ -61,12 +65,12 @@ export default function ChallengePage() {
   if (!ChallengeComponent) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center px-6">
-        <h1 className="font-serif text-3xl font-bold text-[#1A1A1A]">
+        <h1 className="text-3xl font-bold text-white">
           Coming soon
         </h1>
         <Link
           href="/"
-          className="mt-6 rounded-full bg-[#1B6B4A] px-6 py-2.5 text-sm font-medium text-white"
+          className="mt-6 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 px-6 py-2.5 text-sm font-medium text-white"
         >
           Back to challenges
         </Link>

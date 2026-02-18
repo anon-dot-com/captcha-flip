@@ -24,10 +24,10 @@ export default function MathGauntlet({ onSuccess, onFailure, status }: Props) {
 
   return (
     <div>
-      <p className="mb-2 text-sm font-medium text-[#6B7280]">
+      <p className="mb-2 text-sm font-medium text-zinc-400">
         Evaluate this expression (standard operator precedence):
       </p>
-      <div className="mb-6 rounded-lg bg-[#0E1116] p-6 text-center font-mono text-xl text-white sm:text-2xl">
+      <div className="mb-6 rounded-lg border border-[#2a2d3a] bg-[#0a0c12] p-6 text-center font-mono text-xl text-white sm:text-2xl">
         {challenge.expression}
       </div>
       <div className="flex flex-col gap-3 sm:flex-row">
@@ -35,15 +35,15 @@ export default function MathGauntlet({ onSuccess, onFailure, status }: Props) {
           type="number"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && status === "playing" && submit()}
+          onKeyDown={(e) => e.key === "Enter" && status === "playing" && input.trim() && submit()}
           disabled={status !== "playing"}
           placeholder="= ?"
-          className="w-40 rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-[#1B6B4A] focus:outline-none focus:ring-1 focus:ring-[#1B6B4A] disabled:opacity-50"
+          className="w-40 rounded-lg border border-[#2a2d3a] bg-[#1a1d28] px-4 py-2.5 text-sm text-white placeholder-zinc-600 focus:border-cyan-500 focus:outline-none disabled:opacity-50"
         />
         <button
           onClick={submit}
           disabled={status !== "playing" || !input.trim()}
-          className="rounded-lg bg-[#1B6B4A] px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#155a3d] disabled:opacity-50"
+          className="rounded-lg bg-gradient-to-r from-cyan-500 to-cyan-600 px-6 py-2.5 text-sm font-medium text-white transition-shadow hover:shadow-[0_0_16px_rgba(34,211,238,0.2)] disabled:opacity-50"
         >
           Submit
         </button>

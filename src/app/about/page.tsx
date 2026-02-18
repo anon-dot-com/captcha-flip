@@ -3,10 +3,10 @@ import Link from "next/link";
 export default function AboutPage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
-      <h1 className="font-serif text-4xl font-bold text-[#1A1A1A]">
+      <h1 className="text-4xl font-bold tracking-tight text-white">
         About CAPTCHA Flip
       </h1>
-      <p className="mt-4 text-lg text-[#6B7280]">
+      <p className="mt-4 text-lg text-zinc-400">
         A thought experiment turned interactive demo.
       </p>
 
@@ -15,10 +15,10 @@ export default function AboutPage() {
         <div className="flex items-start gap-4">
           <span className="text-4xl">🐻</span>
           <div>
-            <h2 className="font-serif text-2xl font-bold text-[#1A1A1A]">
+            <h2 className="text-2xl font-bold tracking-tight text-white">
               The Bear-Proof Trashcan
             </h2>
-            <div className="mt-4 space-y-4 text-[#1A1A1A] leading-relaxed">
+            <div className="mt-4 space-y-4 leading-relaxed text-zinc-400">
               <p>
                 In national parks across America, engineers have spent decades
                 designing bear-proof trashcans. The challenge? They must be
@@ -27,7 +27,7 @@ export default function AboutPage() {
               </p>
               <p>
                 As one Yosemite ranger put it:{" "}
-                <em className="text-[#1B6B4A]">
+                <em className="text-cyan-400">
                   &quot;There is considerable overlap between the intelligence of
                   the smartest bears and the dumbest tourists.&quot;
                 </em>
@@ -45,34 +45,34 @@ export default function AboutPage() {
 
       {/* Arms Race */}
       <section className="mt-16">
-        <h2 className="font-serif text-2xl font-bold text-[#1A1A1A]">
+        <h2 className="text-2xl font-bold tracking-tight text-white">
           The Arms Race
         </h2>
-        <div className="mt-6 space-y-6">
-          <div className="rounded-xl border border-gray-200 bg-white p-6">
-            <h3 className="font-semibold text-[#1A1A1A]">Phase 1: Distorted Text</h3>
-            <p className="mt-2 text-sm text-[#6B7280] leading-relaxed">
+        <div className="mt-6 space-y-4">
+          <div className="rounded-xl border border-[#2a2d3a] bg-[#13151d] p-6">
+            <h3 className="font-semibold text-zinc-200">Phase 1: Distorted Text</h3>
+            <p className="mt-2 text-sm leading-relaxed text-zinc-500">
               The original CAPTCHAs showed warped letters. OCR got good enough
               to read them. Humans started failing more than bots.
             </p>
           </div>
-          <div className="rounded-xl border border-gray-200 bg-white p-6">
-            <h3 className="font-semibold text-[#1A1A1A]">Phase 2: Image Recognition</h3>
-            <p className="mt-2 text-sm text-[#6B7280] leading-relaxed">
+          <div className="rounded-xl border border-[#2a2d3a] bg-[#13151d] p-6">
+            <h3 className="font-semibold text-zinc-200">Phase 2: Image Recognition</h3>
+            <p className="mt-2 text-sm leading-relaxed text-zinc-500">
               &quot;Click all the traffic lights.&quot; Then vision models surpassed
               human accuracy on ImageNet. The arms race escalated.
             </p>
           </div>
-          <div className="rounded-xl border border-gray-200 bg-white p-6">
-            <h3 className="font-semibold text-[#1A1A1A]">Phase 3: Behavioral Analysis</h3>
-            <p className="mt-2 text-sm text-[#6B7280] leading-relaxed">
+          <div className="rounded-xl border border-[#2a2d3a] bg-[#13151d] p-6">
+            <h3 className="font-semibold text-zinc-200">Phase 3: Behavioral Analysis</h3>
+            <p className="mt-2 text-sm leading-relaxed text-zinc-500">
               reCAPTCHA v3 watches how you move your mouse. But AI agents can
               simulate human-like behavior. The line keeps blurring.
             </p>
           </div>
-          <div className="rounded-xl border border-[#1B6B4A]/30 bg-[#1B6B4A]/5 p-6">
-            <h3 className="font-semibold text-[#1B6B4A]">Phase 4: The Flip ↻</h3>
-            <p className="mt-2 text-sm text-[#1A1A1A] leading-relaxed">
+          <div className="rounded-xl border border-cyan-500/20 bg-cyan-500/5 p-6">
+            <h3 className="font-semibold text-cyan-400">Phase 4: The Flip ↻</h3>
+            <p className="mt-2 text-sm leading-relaxed text-zinc-300">
               What if we stop fighting it? Instead of testing what humans can do
               that AI can&apos;t, test what AI can do that humans can&apos;t.
               Binary decoding, regex matching, JSON traversal — these are
@@ -84,10 +84,10 @@ export default function AboutPage() {
 
       {/* Why */}
       <section className="mt-16">
-        <h2 className="font-serif text-2xl font-bold text-[#1A1A1A]">
+        <h2 className="text-2xl font-bold tracking-tight text-white">
           Why This Exists
         </h2>
-        <div className="mt-4 space-y-4 text-[#1A1A1A] leading-relaxed">
+        <div className="mt-4 space-y-4 leading-relaxed text-zinc-400">
           <p>
             CAPTCHA Flip is a playful exploration of a real tension in
             computing: as AI capabilities grow, the traditional notion of
@@ -109,24 +109,24 @@ export default function AboutPage() {
       </section>
 
       {/* Stats */}
-      <section className="mt-16 rounded-2xl bg-[#0E1116] p-8 text-white">
-        <h2 className="font-serif text-2xl font-bold">By the Numbers</h2>
+      <section className="mt-16 rounded-2xl border border-[#2a2d3a] bg-[#13151d] p-8">
+        <h2 className="text-2xl font-bold tracking-tight text-white">By the Numbers</h2>
         <div className="mt-6 grid grid-cols-2 gap-6 sm:grid-cols-4">
           <div>
-            <p className="text-3xl font-bold text-[#2A9D6E]">8</p>
-            <p className="mt-1 text-sm text-gray-400">Challenges</p>
+            <p className="text-3xl font-bold text-cyan-400">10</p>
+            <p className="mt-1 text-sm text-zinc-500">Challenges</p>
           </div>
           <div>
-            <p className="text-3xl font-bold text-[#C4A052]">&lt;1s</p>
-            <p className="mt-1 text-sm text-gray-400">AI solve time</p>
+            <p className="text-3xl font-bold text-amber-400">&lt;1s</p>
+            <p className="mt-1 text-sm text-zinc-500">AI solve time</p>
           </div>
           <div>
-            <p className="text-3xl font-bold text-[#2A9D6E]">47×</p>
-            <p className="mt-1 text-sm text-gray-400">Human slowdown</p>
+            <p className="text-3xl font-bold text-emerald-400">47×</p>
+            <p className="mt-1 text-sm text-zinc-500">Human slowdown</p>
           </div>
           <div>
-            <p className="text-3xl font-bold text-[#C4A052]">∞</p>
-            <p className="mt-1 text-sm text-gray-400">Frustration potential</p>
+            <p className="text-3xl font-bold text-purple-400">∞</p>
+            <p className="mt-1 text-sm text-zinc-500">Frustration potential</p>
           </div>
         </div>
       </section>
@@ -135,7 +135,7 @@ export default function AboutPage() {
       <div className="mt-16 text-center">
         <Link
           href="/"
-          className="inline-block rounded-full bg-[#1B6B4A] px-8 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#155a3d]"
+          className="inline-block rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 px-8 py-3 text-sm font-semibold text-white transition-shadow hover:shadow-[0_0_24px_rgba(34,211,238,0.3)]"
         >
           ← Back to Challenges
         </Link>

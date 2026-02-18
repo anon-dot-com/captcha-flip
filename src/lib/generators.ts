@@ -204,7 +204,60 @@ export function genCodeOutput() {
   return pick(snippets);
 }
 
-/* ── 8. Hex Color ──────────────────────────── */
+/* ── 9. Pixel Count ──────────────────────── */
+export function genPixelCount() {
+  const gridSize = pick([14, 16, 18, 20]);
+  const totalCells = gridSize * gridSize;
+  const palette = [
+    { name: "red", hex: "#ef4444" },
+    { name: "blue", hex: "#3b82f6" },
+    { name: "green", hex: "#22c55e" },
+    { name: "yellow", hex: "#eab308" },
+    { name: "purple", hex: "#a855f7" },
+    { name: "cyan", hex: "#06b6d4" },
+    { name: "pink", hex: "#ec4899" },
+    { name: "orange", hex: "#f97316" },
+  ];
+
+  // Pick 4-6 colors to use
+  const colorCount = randInt(4, 6);
+  const colors = shuffle(palette).slice(0, colorCount);
+  const targetColor = pick(colors);
+
+  // Fill grid with random colors
+  const grid: string[] = [];
+  for (let i = 0; i < totalCells; i++) {
+    grid.push(pick(colors).hex);
+  }
+
+  // Count target color occurrences
+  const answer = grid.filter((c) => c === targetColor.hex).length;
+
+  return {
+    grid,
+    gridSize,
+    targetColor: targetColor.name,
+    targetHex: targetColor.hex,
+    answer,
+  };
+}
+
+/* ── 10. Sorting / Median ─────────────────── */
+export function genSortingMedian() {
+  const count = randInt(19, 25);
+  // Make count odd so median is a single number
+  const n = count % 2 === 0 ? count + 1 : count;
+  const numbers: number[] = [];
+  for (let i = 0; i < n; i++) {
+    numbers.push(randInt(1, 999));
+  }
+  const sorted = [...numbers].sort((a, b) => a - b);
+  const medianIndex = Math.floor(sorted.length / 2);
+  const answer = sorted[medianIndex];
+  return { numbers, answer, count: n };
+}
+
+
 export function genHexColor() {
   const randomHex = () => {
     const r = randInt(30, 230);

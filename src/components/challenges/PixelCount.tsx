@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { genCharCount } from "@/lib/generators";
+import { genPixelCount } from "@/lib/generators";
 
 interface Props {
   onSuccess: () => void;
@@ -9,8 +9,8 @@ interface Props {
   status: string;
 }
 
-export default function CharacterCount({ onSuccess, onFailure, status }: Props) {
-  const challenge = useMemo(() => genCharCount(), []);
+export default function PixelCount({ onSuccess, onFailure, status }: Props) {
+  const challenge = useMemo(() => genPixelCount(), []);
   const [input, setInput] = useState("");
 
   const submit = () => {
@@ -24,15 +24,38 @@ export default function CharacterCount({ onSuccess, onFailure, status }: Props) 
   return (
     <div>
       <p className="mb-2 text-sm font-medium text-zinc-400">
-        Count every occurrence of the letter{" "}
-        <span className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-gradient-to-br from-cyan-500 to-cyan-600 font-mono text-base font-bold text-white">
-          {challenge.letter}
+        Count every{" "}
+        <span
+          className="inline-flex items-center gap-1.5 rounded-md border border-[#2a2d3a] bg-[#1a1d28] px-2 py-0.5 font-mono text-sm font-bold"
+          style={{ color: challenge.targetHex }}
+        >
+          <span
+            className="inline-block h-3 w-3 rounded-sm"
+            style={{ backgroundColor: challenge.targetHex }}
+          />
+          {challenge.targetColor}
         </span>{" "}
-        (case-insensitive) in the text below:
+        pixel in the grid below:
       </p>
-      <div className="mb-6 rounded-lg border border-[#2a2d3a] bg-[#0a0c12] p-4 text-sm leading-relaxed text-zinc-300">
-        {challenge.text}
+
+      <div className="mb-6 flex justify-center overflow-auto rounded-lg border border-[#2a2d3a] bg-[#0a0c12] p-4">
+        <div
+          className="grid gap-[1px]"
+          style={{
+            gridTemplateColumns: `repeat(${challenge.gridSize}, 1fr)`,
+            width: `${challenge.gridSize * 18}px`,
+          }}
+        >
+          {challenge.grid.map((hex, i) => (
+            <div
+              key={i}
+              className="h-[16px] w-[16px] rounded-[1px]"
+              style={{ backgroundColor: hex }}
+            />
+          ))}
+        </div>
       </div>
+
       <div className="flex flex-col gap-3 sm:flex-row">
         <input
           type="number"
